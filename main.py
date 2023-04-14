@@ -36,12 +36,29 @@ answers = []
 async def get_next_question():
     global current_question_index, answers
     if current_question_index < len(questions):
-        question = questions[current_question_index]
         current_question_index += 1
+        question = questions[current_question_index]
         answers = []
-        return {"question": question}
+        return {"question": question[1]}
     else:
         return {"question": "No more questions"}
+
+@app.get("/reset")
+async def reset():
+    global current_question_index, answers
+    current_question_index = 0
+    answers = []
+    question = questions[current_question_index]
+    print({"question": question[1]})
+
+    return {"question": question[1]}
+
+@app.get("/getquestion")
+async def getquestion():
+    global current_question_index, answers
+    question = questions[current_question_index]
+
+    return {"question": question[1]}
 
 @app.post("/prompt")
 async def prompt(preprompt: Prompt):
