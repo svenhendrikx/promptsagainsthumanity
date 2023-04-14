@@ -10,11 +10,11 @@
 
   async function sendPrompt() {
     try {
-      const response = await axios.post("/prompt", { text: prompt });
       if (!prompt.includes('{}')) {
           error = 'String does not include {}.'
           return
       }
+      const response = await axios.post("/prompt", { text: prompt });
       error = '';
       if (response.status === 200) {
         console.log("Prompt sent successfully");
